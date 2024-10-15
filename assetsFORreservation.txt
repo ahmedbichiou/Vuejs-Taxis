@@ -1,0 +1,90 @@
+//---------------------> confirm button
+const confirmPopup = useConfirm();
+
+function confirm(event) {
+    confirmPopup.require({
+        target: event.target,
+        message: 'Are you sure you want to proceed?',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: 'Save'
+        },
+        accept: () => {
+            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
+        },
+        reject: () => {
+            toast.add({ severity: 'info', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        }
+    });
+}
+
+     <div class="card">
+                <div class="font-semibold text-xl mb-4">ConfirmPopup</div>
+                <ConfirmPopup></ConfirmPopup>
+                <Button ref="popup" @click="confirm($event)" icon="pi pi-check" label="Confirm" class="mr-2"></Button>
+            </div>
+
+//---------------------> CHOICE Voiture octavia / voiture polo sedan / voiture 8 places
+
+ <div class="card">
+        <div class="font-semibold text-xl mb-4">Carousel</div>
+        <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="carouselResponsiveOptions">
+            <template #item="slotProps">
+                <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
+                    <div class="mb-4">
+                        <div class="relative mx-auto">
+                            <img :src="'https://primefaces.org/cdn/primevue/images/product/' + slotProps.data.image" :alt="slotProps.data.name" class="w-full rounded" />
+                            <div class="dark:bg-surface-900 absolute rounded-border" style="left: 5px; top: 5px">
+                                <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data.inventoryStatus)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4 font-medium">{{ slotProps.data.name }}</div>
+                    <div class="flex justify-between items-center">
+                        <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div>
+                        <span>
+                            <Button icon="pi pi-heart" severity="secondary" outlined />
+                            <Button icon="pi pi-shopping-cart" class="ml-2" />
+                        </span>
+                    </div>
+                </div>
+            </template>
+        </Carousel>
+
+//--------------------> fill information
+ <div class="flex mt-8">
+            <div class="card flex flex-col gap-4 w-full">
+                <div class="font-semibold text-xl">Advanced</div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-wrap gap-2 w-full">
+                        <label for="firstname2">Firstname</label>
+                        <InputText id="firstname2" type="text" />
+                    </div>
+                    <div class="flex flex-wrap gap-2 w-full">
+                        <label for="lastname2">Lastname</label>
+                        <InputText id="lastname2" type="text" />
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap">
+                    <label for="address">Address</label>
+                    <Textarea id="address" rows="4" />
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex flex-wrap gap-2 w-full">
+                        <label for="state">State</label>
+                        <Select id="state" v-model="dropdownItem" :options="dropdownItems" optionLabel="name" placeholder="Select One" class="w-full"></Select>
+                    </div>
+                    <div class="flex flex-wrap gap-2 w-full">
+                        <label for="zip">Zip</label>
+                        <InputText id="zip" type="text" />
+                    </div>
+                </div>
+            </div>
+        </div>

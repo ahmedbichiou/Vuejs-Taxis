@@ -23,11 +23,7 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
                     <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
                 </button>
            
-                <div class="p-card  rounded-card">
-            <button type="button" class="p-button p-button-rounded" @click="$router.push('/pages/crud')">
-                <span>Services</span>
-            </button>
-        </div>
+
             </div>
 
 

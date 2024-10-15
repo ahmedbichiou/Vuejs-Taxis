@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+//keep nav bar
         {
             path: '/',
             component: AppLayout,
@@ -12,6 +13,16 @@ const router = createRouter({
                     path: '/',
                     name: 'dashboard',
                     component: () => import('@/views/Dashboard.vue')
+                },
+                {
+                    path: '/AboutUs',
+                    name: 'About Us',
+                    component: () => import('@/views/pages/Reservations/AboutUs.vue')
+                },
+                {
+                    path: '/MainMenu',
+                    name: 'Main Menu',
+                    component: () => import('@/views/pages/Reservations/MainMenu.vue')
                 },
                 {
                     path: '/uikit/formlayout',
@@ -106,6 +117,7 @@ const router = createRouter({
                 }
             ]
         },
+//full screen
         {
             path: '/landing',
             name: 'landing',
