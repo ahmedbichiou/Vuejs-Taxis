@@ -6,29 +6,32 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
 
 <template>
     <div class="layout-topbar">
-        <div class="layout-topbar-logo-container">
+       
             <button class="layout-menu-button layout-topbar-action" @click="onMenuToggle">
                 <i class="pi pi-bars"></i>
             </button>
-            <router-link to="/" class="layout-topbar-logo">
+            <router-link to="/" class="layout-topbar-logo"></router-link>
+        
 
+        <!-- Add Taxi Transfers title -->
+        <h1 class="layout-topbar-title">Taxi Transfers</h1> <!-- Title Element -->
 
-                
-            </router-link>
-        </div>
-
-        <div class="layout-topbar-actions">
-            <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
-                    <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
-                </button>
-           
-
-            </div>
-
-
-
-
-        </div>
+     
     </div>
 </template>
+
+<style>
+.layout-topbar {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: space-between; /* Space between menu button, title, and actions */
+}
+
+.layout-topbar-title {
+    flex: 1; /* Allow the title to take up remaining space */
+    text-align: center; /* Center the title text */
+    font-size: 1.5rem; /* Adjust font size as needed */
+    font-weight: bold; /* Make it bold for emphasis */
+    color: #333; /* Change color as needed */
+}
+</style>

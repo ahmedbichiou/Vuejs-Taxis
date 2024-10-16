@@ -6,13 +6,11 @@ import AppMenuItem from './AppMenuItem.vue';
 const model = ref([
     {
         label: 'Home',
-        items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
+        items: [{ label: 'Main Menu', icon: 'pi pi-fw pi-home', to: '/' }]
     },
     {
         label: 'Test Components',
         items: [
-           
-            { label: 'Main Menu', icon: 'pi pi-fw pi-id-card', to: '/MainMenu' },
             { label: 'AboutUs', icon: 'pi pi-fw pi-id-card', to: '/AboutUs' },
     ]},
     {
@@ -41,11 +39,6 @@ const model = ref([
         icon: 'pi pi-fw pi-briefcase',
         to: '/pages',
         items: [
-        {
-                label: 'Main Menu',
-                icon: 'pi pi-fw pi-globe',
-                to: '/MainMenu'
-            },
             {
                 label: 'Landing',
                 icon: 'pi pi-fw pi-globe',

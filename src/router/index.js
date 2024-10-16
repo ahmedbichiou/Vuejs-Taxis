@@ -11,8 +11,8 @@ const router = createRouter({
             children: [
                 {
                     path: '/',
-                    name: 'dashboard',
-                    component: () => import('@/views/Dashboard.vue')
+                    name: 'Main Menu',
+                    component: () => import('@/views/pages/Reservations/MainMenu.vue')
                 },
                 {
                     path: '/AboutUs',
@@ -20,10 +20,11 @@ const router = createRouter({
                     component: () => import('@/views/pages/Reservations/AboutUs.vue')
                 },
                 {
-                    path: '/MainMenu',
-                    name: 'Main Menu',
-                    component: () => import('@/views/pages/Reservations/MainMenu.vue')
+                    path: '/ReservationDetails',
+                    name: 'Reservation Details',
+                    component: () => import('@/views/pages/Reservations/ReservationDetails.vue')
                 },
+               
                 {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
