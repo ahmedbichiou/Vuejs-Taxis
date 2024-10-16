@@ -8,14 +8,16 @@ const model = ref([
         label: 'Home',
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
     },
- 
     {
         label: 'Test Components',
         items: [
            
             { label: 'Main Menu', icon: 'pi pi-fw pi-id-card', to: '/MainMenu' },
             { label: 'AboutUs', icon: 'pi pi-fw pi-id-card', to: '/AboutUs' },
-            /*
+    ]},
+    {
+        label: 'Component library',
+        items: [
             { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
             { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
             { label: 'Button', icon: 'pi pi-fw pi-mobile', to: '/uikit/button', class: 'rotated-icon' },
@@ -30,10 +32,10 @@ const model = ref([
             { label: 'File', icon: 'pi pi-fw pi-file', to: '/uikit/file' },
             { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
             { label: 'Timeline', icon: 'pi pi-fw pi-calendar', to: '/uikit/timeline' },
-            { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }*/
+            { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
         ]
     },
-     /*
+    
     {
         label: 'Pages',
         icon: 'pi pi-fw pi-briefcase',
@@ -146,7 +148,7 @@ const model = ref([
                 target: '_blank'
             }
         ]
-    }*/
+    }
 ]);
 </script>
 
