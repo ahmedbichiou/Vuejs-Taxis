@@ -51,25 +51,29 @@ const load = (index) => {
     return;
   }
 
-  // Log input values
-  console.log("Inputs:", {
+  // Log input values and create an object with all the data
+  const reservationData = {
     calendarValue: calendarValue.value,
-    departure: departure.value,
-    destination: destination.value,
+    departure: departure.value.name, // send the name instead of the object
+    destination: destination.value.name, // send the name instead of the object
     inputNumberAdults: inputNumberAdults.value,
     inputNumberChildren: inputNumberChildren.value,
     inputNumberBabies: inputNumberBabies.value,
     hours: hours.value,
     minutes: minutes.value
-  });
+  };
 
   loading.value[index] = true;
   setTimeout(() => {
     loading.value[index] = false;
-    // Navigate to /ReservationDetails route
-    router.push('/ReservationDetails');
+    // Navigate to /ReservationDetails route with query parameters
+    router.push({
+      path: '/ReservationDetails',
+      query: reservationData
+    });
   }, 1000);
 };
+
 
 // Compute validation states
 const isCalendarInvalid = () => interacted.value && !calendarValue.value;
@@ -94,13 +98,16 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
         </div>
         <div class="relative z-10 card flex flex-col gap-4 p-4 bg-white bg-opacity-90 max-w-md mx-auto rounded-lg shadow-lg mx-4">
           <div class="font-semibold text-xl mb-2">Select Date</div>
-          <DatePicker
-            :showIcon="true"
-            :showButtonBar="true"
-            v-model="calendarValue"
-            placeholder="Pick a date"
-            :class="{ 'border-red-500': isCalendarInvalid() }"  
-          />
+          <div class="font-semibold text-xl mb-2">Select Date</div>
+<DatePicker
+  :showIcon="true"
+  :showButtonBar="true"
+  v-model="calendarValue"
+  placeholder="Pick a date"
+  :class="{ 'border-red-500': isCalendarInvalid() }"
+  :minDate="new Date()"  
+/>
+
 
           <div class="font-semibold text-xl mb-2">Select Time</div>
           <div class="flex gap-4">
@@ -132,7 +139,10 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
             placeholder="Select Departure"
             :class="{ 'border-red-500': isDepartureInvalid() }" 
           />
-          
+            <!-- Invert button -->
+  <div class="flex justify-center my-2">
+
+  </div>
           <div class="font-semibold text-xl mb-2">Select Destination</div>
           <Select
             v-model="destination"
