@@ -264,16 +264,16 @@ const scrollToNextStep = () => {
 </script>
 
 <style scoped>
-.multi-step-form {
-  display: flex;
-  flex-direction: column;
-}
+
 
 
 /* Mobile Layout (Below 768px) */
 @media (max-width: 767px) {
 
-
+  .multi-step-form {
+  display: flex;
+  flex-direction: column;
+}
 
 
   .progress-indicator {
@@ -313,9 +313,19 @@ const scrollToNextStep = () => {
     opacity: 0.3; /* Grayed out for inactive steps */
     cursor: default;
   }
+  
 }
+
+
 /* Grid styles for desktop */
 @media (min-width: 768px) {
+
+  .multi-step-form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25vh;
+  margin-right: 25vh;
+}
   .progress-indicator {
     flex-direction: column;
     width: 100%;
