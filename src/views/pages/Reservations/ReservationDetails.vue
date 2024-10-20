@@ -151,28 +151,15 @@
 </template>
 
 <script setup>
-import { useMutation } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
+
+
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
 import Carousel from 'primevue/carousel';
 import Button from 'primevue/button';
-
+import { GraphQLClient, gql } from 'graphql-request';
 // GraphQL mutation
-const CREATE_TRANSFER = gql`
-  mutation createTransfer($input: CreateTransferInput!) {
-    createTransfer(input: $input) {
-      id
-      start
-      end
-      clientId
-      price
-      date
-      time
-      description
-    }
-  }
-`;
+
 
 // Car options for the carousel
 const cars = ref([
@@ -265,34 +252,54 @@ const selectCar = (car) => {
 };
 
 // Mutate function from Apollo Composable
-const { mutate: createTransfer } = useMutation(CREATE_TRANSFER);
 
-const submitForm = async () => {
-  try {
-    // Prepare the input for the mutation
-    const input = {
-      id: "transfer-001",
-      start: "AEROPORT tunis",
-      end: "Location B",
-      price: selectedCar.value.price,
-      clientId: "client-001", // Adjust based on your actual logic
-      date: formattedDate.value,
-      time: `${reservationData.hours}:${reservationData.minutes}`,
-      description: extraDescription.value || '',
-    };
 
-    // Call the mutation with the input
-    const response = await createTransfer({ variables: { input } });
+async function submitForm() {
+    // Initialize the GraphQL client pointing to your GraphQL server endpoint
+    const client = new GraphQLClient('https://localhost:5001/graphql');
 
-    // Handle the response
-    alert(`Transfer created successfully! ID: ${response.data.createTransfer.id}`);
+    // Define the GraphQL mutation to insert a new transfer
+    const INSERT_TRANSFER = gql`
+      mutation {
+        createTransfer(input: {
+          id: "transfer-001",
+          start: "Location A",
+          end: "Location B",
+          price: 200,
+          clientId: "client-001",
+          date: "2024-10-12",
+          time: "09:00 AM",
+          description: "Airport transfer"
+        }) {
+          id
+          start
+          end
+          price
+          clientId
+          date
+          time
+          description
+        }
+      }
+    `;
 
-    // Optionally reset form fields or redirect user
-  } catch (error) {
-    console.error('Error creating transfer:', error);
-    alert('An error occurred while creating your transfer. Please try again.');
-  }
-};
+    console.log('Insert Mutation:', INSERT_TRANSFER);
+
+    try {
+      // Send the mutation request to the server
+      const response = await client.request(INSERT_TRANSFER);
+      
+      // Extract the inserted transfer information from the response
+      const newTransfer = response.createTransfer;
+
+      // Optionally update local state or perform any action with the inserted transfer
+      console.log('New transfer created successfully:', newTransfer);
+
+    } catch (err) {
+      // Handle any errors that occur during the request
+      console.error('Error creating new transfer:', err);
+    }
+}
 
 const scrollToNextStep = () => {
   const nextStepElement = document.querySelector('.step-content:nth-of-type(' + currentStep.value + ')');
