@@ -285,11 +285,11 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
   <Fluid class="flex flex-col gap-8">
     <div class="custom-card relative w-full flex-grow mb-8 ">
       
-      <img
-  src="/demo/images/autoroute.jpg"
-  alt="Background"
-  class="rounded-xl absolute inset-0 object-cover w-full h-[calc(100%+4rem)] -top-6 -bottom-2 opacity-90"
-/>
+  <img
+    src="/demo/images/autoroute.webp"
+    alt="Background"
+    class="rounded-xl absolute inset-0 object-cover w-full h-[calc(100%+4rem)] -top-6 -bottom-2 opacity-90"
+  />
 
 
 
