@@ -151,17 +151,28 @@
 </template>
 
 <script setup>
+import { useMutation } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
 import Carousel from 'primevue/carousel';
 import Button from 'primevue/button';
-const formattedDate = computed(() => {
-  const date = new Date(reservationData.calendarValue); // Convert to Date object
-  return date.toLocaleDateString(); // Format as 'MM/DD/YYYY' or your preferred format
-});
-// Route data to access reservation details
-const route = useRoute();
-const reservationData = route.query;
+
+// GraphQL mutation
+const CREATE_TRANSFER = gql`
+  mutation createTransfer($input: CreateTransferInput!) {
+    createTransfer(input: $input) {
+      id
+      start
+      end
+      clientId
+      price
+      date
+      time
+      description
+    }
+  }
+`;
 
 // Car options for the carousel
 const cars = ref([
@@ -169,6 +180,10 @@ const cars = ref([
   { name: 'High end car', image: 'Octavia.png', price: 45 },
   { name: '8-seater', image: 'transporter.png', price: 60 },
 ]);
+
+// Route data to access reservation details
+const route = useRoute();
+const reservationData = route.query;
 
 // State for current step and selected car
 const currentStep = ref(1);
@@ -189,7 +204,6 @@ const carouselResponsiveOptions = [
   { breakpoint: '560px', numVisible: 1, numScroll: 1 },
 ];
 
-
 // Validation states
 const errors = ref({
   fullName: '',
@@ -197,6 +211,7 @@ const errors = ref({
   number: '',
   email: '',
 });
+
 const isValidStep2 = computed(() => {
   let valid = true;
   errors.value.fullName = '';
@@ -240,8 +255,8 @@ const Step3 = () => {
 };
 const goToStep = (step) => {
   if (step < currentStep.value) {
-      currentStep.value = step;
-      scrollToNextStep();
+    currentStep.value = step;
+    scrollToNextStep();
   }
 };
 
@@ -249,17 +264,47 @@ const selectCar = (car) => {
   selectedCar.value = car;
 };
 
-const submitForm = () => {
-  // Handle form submission logic here
-  alert(`You selected the ${selectedCar.value.name} car.`);
+// Mutate function from Apollo Composable
+const { mutate: createTransfer } = useMutation(CREATE_TRANSFER);
+
+const submitForm = async () => {
+  try {
+    // Prepare the input for the mutation
+    const input = {
+      id: "transfer-001",
+      start: "AEROPORT tunis",
+      end: "Location B",
+      price: selectedCar.value.price,
+      clientId: "client-001", // Adjust based on your actual logic
+      date: formattedDate.value,
+      time: `${reservationData.hours}:${reservationData.minutes}`,
+      description: extraDescription.value || '',
+    };
+
+    // Call the mutation with the input
+    const response = await createTransfer({ variables: { input } });
+
+    // Handle the response
+    alert(`Transfer created successfully! ID: ${response.data.createTransfer.id}`);
+
+    // Optionally reset form fields or redirect user
+  } catch (error) {
+    console.error('Error creating transfer:', error);
+    alert('An error occurred while creating your transfer. Please try again.');
+  }
 };
 
 const scrollToNextStep = () => {
   const nextStepElement = document.querySelector('.step-content:nth-of-type(' + currentStep.value + ')');
   if (nextStepElement) {
-      nextStepElement.scrollIntoView({ behavior: 'smooth' });
+    nextStepElement.scrollIntoView({ behavior: 'smooth' });
   }
 };
+
+const formattedDate = computed(() => {
+  const date = new Date(reservationData.calendarValue); // Convert to Date object
+  return date.toLocaleDateString(); // Format as 'MM/DD/YYYY' or your preferred format
+});
 
 </script>
 
