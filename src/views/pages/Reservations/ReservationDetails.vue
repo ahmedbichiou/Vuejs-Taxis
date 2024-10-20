@@ -257,33 +257,62 @@ const selectCar = (car) => {
 async function submitForm() {
     // Initialize the GraphQL client pointing to your GraphQL server endpoint
     const client = new GraphQLClient('https://localhost:5001/graphql');
+   
+    const INSERT_CLIENT= gql`
+      mutation {
+        createClient(input: {
+      name: "${fullName.value}", 
+      surname: "${surname.value}", 
+      email: "${email.value}", 
+      phone: "${number.value}",
+        }) {
+          name
+          surname
+          email
+          phone
+        }
+      }
+    `;
 
     // Define the GraphQL mutation to insert a new transfer
     const INSERT_TRANSFER = gql`
       mutation {
         createTransfer(input: {
-          id: "transfer-001",
-          start: "Location A",
-          end: "Location B",
-          price: 200,
-          clientId: "client-001",
-          date: "2024-10-12",
-          time: "09:00 AM",
-          description: "Airport transfer"
+          start:"${reservationData.departure}",
+          end: "${reservationData.destination}",
+          price:${selectedCar.value.price},
+          clientEmail: "${email.value}",
+          date: "${formattedDate.value}",
+          time: "${reservationData.hours}:${reservationData.minutes}",
+          description:  "${extraDescription.value}"
         }) {
-          id
           start
           end
           price
-          clientId
+          clientEmail
           date
           time
           description
         }
       }
     `;
-
+    console.log('Insert Mutation:', INSERT_CLIENT);
     console.log('Insert Mutation:', INSERT_TRANSFER);
+
+    try {
+      // Send the mutation request to the server
+      const response = await client.request(INSERT_CLIENT);
+      
+      // Extract the inserted transfer information from the response
+      const newClient = response.createClient;
+
+      // Optionally update local state or perform any action with the inserted transfer
+      console.log('New client created successfully:', newClient);
+
+    } catch (err) {
+      // Handle any errors that occur during the request
+      console.error('Error creating new client : ', err);
+    }
 
     try {
       // Send the mutation request to the server
