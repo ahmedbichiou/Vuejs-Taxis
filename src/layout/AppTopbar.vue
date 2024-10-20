@@ -1,20 +1,14 @@
 <script setup>
-import { useLayout } from '@/layout/composables/layout';
 
-const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
 </script>
 
 <template>
     <div class="layout-topbar">
        
-            <button class="layout-menu-button layout-topbar-action" @click="onMenuToggle">
-                <i class="pi pi-bars"></i>
-            </button>
-            <router-link to="/" class="layout-topbar-logo"></router-link>
-        
-
-        <!-- Add Taxi Transfers title -->
-        <h1 class="layout-topbar-title">Taxi Transfers</h1> <!-- Title Element -->
+    
+        <router-link to="/" class="layout-topbar-title">
+    <h1>Taxi Transfers</h1>
+  </router-link>
 
      
     </div>
@@ -22,12 +16,16 @@ const { onMenuToggle, toggleDarkMode, isDarkTheme } = useLayout();
 
 <style>
 .layout-topbar {
+    
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center; /* Vertically align items */
     justify-content: space-between; /* Space between menu button, title, and actions */
 }
 
 .layout-topbar-title {
+    
     flex: 1; /* Allow the title to take up remaining space */
     text-align: center; /* Center the title text */
     font-size: 1.5rem; /* Adjust font size as needed */

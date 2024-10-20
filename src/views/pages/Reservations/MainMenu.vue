@@ -98,7 +98,6 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
         </div>
         <div class="relative z-10 card flex flex-col gap-4 p-4 bg-white bg-opacity-90 max-w-md mx-auto rounded-lg shadow-lg mx-4">
           <div class="font-semibold text-xl mb-2">Select Date</div>
-          <div class="font-semibold text-xl mb-2">Select Date</div>
 <DatePicker
   :showIcon="true"
   :showButtonBar="true"

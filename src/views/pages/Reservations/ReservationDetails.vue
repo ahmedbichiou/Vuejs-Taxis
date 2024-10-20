@@ -1,155 +1,3 @@
-<template>
-  <div class="multi-step-form">
-    <div class="progress-indicator">
-      <div
-        class="step"
-        :class="{ active: currentStep === 1, completed: currentStep > 1 }"
-        @click="goToStep(1)"
-      >
-        <span>✔️</span> Step 1: Choose Car and Price
-      </div>
-      <div
-        class="step"
-        :class="{ active: currentStep === 2, completed: currentStep > 2 }"
-        @click="goToStep(2)"
-      >
-        <span>✔️</span> Step 2: Complete Details
-      </div>
-      <div
-        class="step"
-        :class="{ active: currentStep === 3, completed: currentStep > 3 }"
-        @click="goToStep(3)"
-      >
-        <span>✔️</span>  Step 3: Confirm Details
-      </div>
-    </div>
-
-    <div class="form-content">
-      <div v-if="currentStep === 3" class="step-content">
-    <!-- Reservation Details Section -->
-    <div class="reservation-details">
-      <div class="font-semibold text-xl mb-4">Reservation Details</div>
-
-      <!-- Display reservation details -->
-      <div class="mb-4">
-        <p><strong>Date:</strong> {{ formattedDate  }}<strong>  Time:</strong> {{ reservationData.hours }}:{{ reservationData.minutes }}</p>
-        <p>{{ reservationData.departure }} <strong>To</strong> {{ reservationData.destination }}</p>
-        
-        <div class="flex items-center mb-2">
-    <span class="mr-2"><strong>Adults:</strong> 👤 {{ reservationData.inputNumberAdults }}</span>
-    <span class="mr-2"><strong>Children:</strong> 👶 {{ reservationData.inputNumberChildren }}</span>
-    <span><strong>Babies:</strong> 👶 {{ reservationData.inputNumberBabies }}</span>
-  </div>
-       
-      </div>
-
-      <!-- Display user details -->
-      <div class="mb-4">
-        <p><strong>Firstname:</strong> {{ fullName }}</p>
-        <p><strong>Lastname:</strong> {{ surname }}</p>
-        <p><strong>Phone Number:</strong> {{ number }}</p>
-        <p><strong>Email:</strong> {{ email }}</p>
-        <p v-if="flightName"><strong>Flight Name:</strong> {{ flightName }}</p>
-        <p v-if="extraDescription"><strong>Extra Description:</strong> {{ extraDescription }}</p>
-      </div>
-
-  
-
-      <!-- Submit button -->
-      <Button label="Submit" @click="submitForm" class="w-full mt-4" />
-    </div>
-  </div>
-
-      <div v-if="currentStep === 1" class="step-content">
-        <!-- Carousel for Car Selection -->
-        <div>
-             <div class="font-semibold text-xl mb-4">Choose Your Car</div>
-            <Carousel :value="cars" :numVisible="3" :numScroll="1" :responsiveOptions="carouselResponsiveOptions">
-                <template #item="slotProps">
-                    <div
-                        class="car-card"
-                        :class="{ selected: selectedCar === slotProps.data }"
-                        @click="selectCar(slotProps.data)"
-                    >
-                        <div class="image-container mb-4">
-                            <div class="relative mx-auto">
-                                <img
-                                    :src="'/demo/images/cars/' + slotProps.data.image"
-                                    :alt="slotProps.data.name"
-                                    class="w-full h-full object-cover rounded"
-                                />
-                            </div>
-                        </div>
-                        <div class="mb-4 font-medium">{{ slotProps.data.name }}</div>
-                        <div class="flex justify-between items-center">
-                           
-                            <span>
-                              <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div>
-                            </span>
-                        </div>
-                    </div>
-                </template>
-            </Carousel>
-            <Button label="Confirm" class="confirm-button" @click="Step2" />
-        </div>
-  
-      </div>
-
-<!-- Step 2: Complete Details Form -->
-<div v-if="currentStep === 2" class="step-content">
-  <!-- Using Advanced Layout Structure for the Form -->
-  <div>
-    <div class="flex flex-col gap-4 w-full">
-      <div class="font-semibold text-xl">Complete Your Details</div>
-
-      <!-- First and Last Name fields in two columns -->
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="w-full">
-          <label for="fullName">Firstname</label>
-          <InputText id="fullName" v-model="fullName" placeholder="Enter your firstname" class="w-full" />
-        </div>
-        <div class="w-full">
-          <label for="surname">Lastname</label>
-          <InputText id="surname" v-model="surname" placeholder="Enter your lastname" class="w-full" />
-        </div>
-      </div>
-
-      <!-- Phone Number field -->
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="w-full">
-          <label for="number">Phone Number</label>
-          <InputText id="number" v-model="number" type="number" placeholder="Enter your phone number" class="w-full" />
-        </div>
-      </div>
-
-      <!-- Email and Flight Name fields in two columns -->
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="w-full">
-          <label for="email">Email</label>
-          <InputText id="email" v-model="email" type="email" placeholder="Enter your email" class="w-full" />
-        </div>
-        <div class="w-full">
-          <label for="flightName">Flight Name (optional)</label>
-          <InputText id="flightName" v-model="flightName" placeholder="Enter your flight name" class="w-full" />
-        </div>
-      </div>
-
-      <!-- Extra description field -->
-      <div class="flex flex-col gap-2 w-full">
-        <label for="extraDescription">Extra Description (optional)</label>
-        <Textarea id="extraDescription" v-model="extraDescription" rows="4" placeholder="Enter any extra details" class="w-full" />
-      </div>
-
-      <!-- Submit Button -->
-      <Button label="Confirm" @click="Step3" class="confirm-button w-full" />
-    </div>
-  </div>
-</div>
-
-    </div>
-  </div>
-</template>
-
 <script setup>
 
 
@@ -163,11 +11,13 @@ import { GraphQLClient, gql } from 'graphql-request';
 
 // Car options for the carousel
 const cars = ref([
-  { name: 'Normal car', image: 'polo_sedan.png', price: 40 },
-  { name: 'High end car', image: 'Octavia.png', price: 45 },
-  { name: '8-seater', image: 'transporter.png', price: 60 },
+  { name: 'Normal car', image: 'polo_sedan.png', price: 40, description: 'A reliable and economical car for city travel.', seats: 5 },
+  { name: 'High end car', image: 'Octavia.png', price: 45, description: 'Luxury car with premium features for a comfortable ride.', seats: 5 },
+  { name: '8-seater', image: 'transporter.png', price: 60, description: 'Ideal for larger groups or families.', seats: 8 },
 ]);
-
+const progressWidth = computed(() => {
+  return `${(currentStep.value - 1) * 33}%`;
+});
 // Route data to access reservation details
 const route = useRoute();
 const reservationData = route.query;
@@ -185,11 +35,6 @@ const flightName = ref('');
 const extraDescription = ref(''); // Added this line
 
 // Carousel responsive options
-const carouselResponsiveOptions = [
-  { breakpoint: '1024px', numVisible: 3, numScroll: 1 },
-  { breakpoint: '768px', numVisible: 2, numScroll: 1 },
-  { breakpoint: '560px', numVisible: 1, numScroll: 1 },
-];
 
 // Validation states
 const errors = ref({
@@ -343,14 +188,337 @@ const formattedDate = computed(() => {
 });
 
 </script>
+<template>
+  <div class="multi-step-form">
+    <div class="progress-indicator">
+      <div
+        class="step"
+        :class="{ active: currentStep === 1, completed: currentStep > 1 }"
+        @click="goToStep(1)"
+      >
+        <span>✔️</span> Step 1: Choose Car and Price
+      </div>
+      <div
+        class="step"
+        :class="{ active: currentStep === 2, completed: currentStep > 2 }"
+        @click="goToStep(2)"
+      >
+        <span>✔️</span> Step 2: Complete Details
+      </div>
+      <div
+        class="step"
+        :class="{ active: currentStep === 3, completed: currentStep > 3 }"
+        @click="goToStep(3)"
+      >
+        <span>✔️</span> Step 3: Confirm Details
+      </div>
+      <div class="progress-bar-container">
+      <div class="progress-bar" :style="{ width: progressWidth }"></div>
+    </div>
+    </div>
+
+    <div class="form-content">
+      <!-- Reservation Information Section on the right -->
+      <div class="reservation-info flex" v-if="currentStep < 3">
+  <!-- Reservation Information Card -->
+  <div class="detail-cardL">
+    <h2 class="font-semibold text-xl mb-2">Reservation Information</h2>
+    <p><strong>Date:</strong> {{ formattedDate }} <strong>Time:</strong> {{ reservationData.hours }}:{{ reservationData.minutes }}</p>
+    <p><strong>From:</strong> {{ reservationData.departure }} <strong>To:</strong> {{ reservationData.destination }}</p>
+    <div class="flex items-center mb-2">
+      <div class="flex-1"><strong>Adults:</strong> 👤 {{ reservationData.inputNumberAdults }}</div>
+      <div class="flex-1"><strong>Children:</strong> 👶 {{ reservationData.inputNumberChildren }}</div>
+      <div class="flex-1"><strong>Babies:</strong> 👶 {{ reservationData.inputNumberBabies }}</div>
+    </div>
+  </div>
+
+  <!-- Selected Car Card -->
+<div class="detail-cardR">
+  <h3 class="font-semibold text-xl mb-2">Selected Car</h3>
+  <div class="flex items-center">
+    <div class="image-container mr-4">
+      <img
+        :src="selectedCar ? '/demo/images/cars/' + selectedCar.image : '/demo/images/cars/outline.jpg'"
+        :alt="selectedCar ? selectedCar.name : '/demo/images/cars/outline.jpg'"
+        class="car-image2"
+      />
+    </div>
+    <div class="car-info flex flex-col">
+      <div class="flex justify-between">
+        <span class="font-semibold">Name:</span>
+        <span>{{ selectedCar ? selectedCar.name : '' }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="font-semibold">Price:</span>
+        <span>{{ selectedCar ? selectedCar.price + '$' : '' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div v-if="currentStep === 3" class="step-content">
+  <!-- Reservation Details Section -->
+  <div>
+    <div class="font-semibold text-xl mb-4 text-center">Reservation Details</div>
+    <hr class="border-t border-gray-300 mb-4" />
+    <div class="flex items-center mb-6">
+      <div class="image-container2 mr-4">
+        <img
+          :src="selectedCar ? '/demo/images/cars/' + selectedCar.image : '/demo/images/cars/outline.jpg'"
+          :alt="selectedCar ? selectedCar.name : '/demo/images/cars/outline.jpg'"
+          class="car-image3"
+        />
+      </div>
+      <div class="car-info flex flex-col justify-between flex-1">
+        <div class="flex justify-between">
+          <span class="font-semibold"></span>
+          
+        </div>
+        <div class="flex justify-between">
+          <span class="font-semibold"></span>
+          <span class="text-2xl font-bold text-right text-green-600">
+            {{ selectedCar ? '$' + selectedCar.price : '' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="border-t border-gray-300 mb-4" />
+
+    <!-- Progress Bar Section -->
+    <div class="flex flex-col mb-4">
+    <!-- Car Image -->
+   
+    <div class="flex justify-between items-center">
+      <!-- Departure Location -->
+      <span>{{ reservationData.departure }}</span>
+
+      <!-- Arrow Icon (you can replace this with any arrow icon or graphic you prefer) -->
+      <span class="mx-2">→</span>
+
+      <!-- Destination Location -->
+      <span>{{ reservationData.destination }}</span>
+    </div>
+  </div>
+
+    <!-- Display reservation details -->
+    <div class="reservation-info2 mb-4">
+      <p><strong>Date:</strong> {{ formattedDate }} <strong>Time:</strong> {{ reservationData.hours }}:{{ reservationData.minutes }}</p>
+      <div class="flex items-center mb-2">
+        <div class="flex-1"><strong>Adults:</strong> 👤 {{ reservationData.inputNumberAdults }}</div>
+        <div class="flex-1"><strong>Children:</strong> 👶 {{ reservationData.inputNumberChildren }}</div>
+        <div class="flex-1"><strong>Babies:</strong> 👶 {{ reservationData.inputNumberBabies }}</div>
+      </div>
+    </div>
+
+    <hr class="border-t border-gray-300 mb-4" />
+
+    <!-- Display user details -->
+    <div class="user-details mb-4">
+      <p><strong>Firstname:</strong> {{ fullName }}</p>
+      <p><strong>Lastname:</strong> {{ surname }}</p>
+      <p><strong>Phone Number:</strong> {{ number }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+      <p v-if="flightName"><strong>Flight Name:</strong> {{ flightName }}</p>
+      <p v-if="extraDescription"><strong>Extra Description:</strong> {{ extraDescription }}</p>
+    </div>
+
+    <hr class="border-t border-gray-300 mb-4" />
+
+    <!-- Submit button -->
+    <Button label="Submit" @click="submitForm" class="w-full mt-4" />
+  </div>
+</div>
+
+
+
+
+      <div v-if="currentStep === 1" class="step-content">
+  <div>
+    <div class="font-semibold text-xl mb-4">Choose Your Car</div>
+    
+    <!-- List of Cars -->
+    <div class="car-list">
+      <div 
+        v-for="car in cars" 
+        :key="car.name" 
+        class="car-card"
+        :class="{ selected: selectedCar === car }"
+        @click="selectCar(car)"
+      >
+        <div class="car-info">
+          <div class="image-container">
+            <img
+              :src="'/demo/images/cars/' + car.image"
+              :alt="car.name"
+              class="car-image"
+            />
+          </div>
+          <div class="car-details">
+            <div class="mb-4 font-medium">{{ car.name }}</div>
+            <div class="flex justify-between items-center mb-2">
+              <span>
+                <div class="mt-0 font-semibold text-xl">${{ car.price }}</div>
+              </span>
+            </div>
+            <p><strong>Description:</strong> {{ car.description }}</p>
+            <p><strong>Seats:</strong> {{ car.seats }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full Width Confirm Button -->
+    <Button label="Confirm" class="confirm-button w-full mt-[2vh]" @click="Step2" />
+
+  </div>
+</div>
+
+
+      <div v-if="currentStep === 2" class="step-content">
+        <!-- Using Advanced Layout Structure for the Form -->
+        <div>
+          <div class="flex flex-col gap-4 w-full">
+            <div class="font-semibold text-xl">Complete Your Details</div>
+
+            <!-- First and Last Name fields in two columns -->
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="w-full">
+                <label for="fullName">Firstname</label>
+                <InputText id="fullName" v-model="fullName" placeholder="Enter your firstname" class="w-full" />
+              </div>
+              <div class="w-full">
+                <label for="surname">Lastname</label>
+                <InputText id="surname" v-model="surname" placeholder="Enter your lastname" class="w-full" />
+              </div>
+            </div>
+
+            <!-- Phone Number field -->
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="w-full">
+                <label for="number">Phone Number</label>
+                <InputText id="number" v-model="number" type="number" placeholder="Enter your phone number" class="w-full" />
+              </div>
+            </div>
+
+            <!-- Email and Flight Name fields in two columns -->
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="w-full">
+                <label for="email">Email</label>
+                <InputText id="email" v-model="email" type="email" placeholder="Enter your email" class="w-full" />
+              </div>
+              <div class="w-full">
+                <label for="flightName">Flight Name (optional)</label>
+                <InputText id="flightName" v-model="flightName" placeholder="Enter your flight name" class="w-full" />
+              </div>
+            </div>
+
+            <!-- Extra description field -->
+            <div class="flex flex-col gap-2 w-full">
+              <label for="extraDescription">Extra Description (optional)</label>
+              <Textarea id="extraDescription" v-model="extraDescription" rows="4" placeholder="Enter any extra details" class="w-full" />
+            </div>
+
+            <!-- Submit Button -->
+            <Button label="Confirm" @click="Step3" class="confirm-button w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
 
 <style scoped>
+.detail-cardL{
+  width: 50%; /* Equivalent to w-1/2 */
+  padding: 1rem; /* Equivalent to p-4 (16px) */
+  margin-right: 1vh;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+  background-color: white; /* Optional, to make sure it's visible */
+  border-radius: 8px; /* Optional for rounded corners */
+}
+.detail-cardR{
+  width: 50%; /* Equivalent to w-1/2 */
+  padding: 1rem; /* Equivalent to p-4 (16px) */
+  
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalent to shadow-md */
+  background-color: white; /* Optional, to make sure it's visible */
+  border-radius: 8px; /* Optional for rounded corners */
+}
 
+.progress-bar-container {
+  width: 100%;
+  height: 8px; /* Height of the progress bar */
+  background-color: #e5e7eb; /* Light gray background */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Prevent overflow */
+  margin-top: 5px; /* Space above the progress bar */
+}
 
+.progress-bar {
+  height: 100%; /* Fill the height of the container */
+  background-color: #38a169; /* Green color for the filled part */
+  border-radius: 5px; /* Rounded corners */
+  transition: width 0.5s ease; /* Smooth animation */
+}
+
+/* Optional: Style for the labels above the progress bar */
+.progress-bar-container span {
+  display: inline-block;
+  width: 50%; /* Make sure each span takes half the width */
+  text-align: center; /* Center text */
+}
+
+  .card {
+    width: 100%; /* Full width */
+  padding: 20px;
+  margin-right: 2vh;
+  background-color: #ffffff; /* Light background for visibility */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin-bottom: 1%; /* Optional: Subtle shadow */
+}
+.reservation-info {
+ 
+  
+  
+ 
+  border-radius: 8px; 
+ 
+}
+.reservation-info2 {
+  width: 100%; /* Full width */
+  padding: 20px;
+  
+  /* Light background for visibility */
+  border-radius: 8px; /* Rounded corners */
+  /* Subtle shadow */
+  margin-bottom: 1%; /* Space below the reservation info */
+}
+.reservation-info h2 {
+  margin-bottom: 10px; /* Space below the heading */
+  color: #333; /* Dark text color */
+}
+
+.reservation-info p {
+  margin: 5px 0; /* Space between lines */
+  color: #555; /* Slightly lighter text color */
+}
 
 /* Mobile Layout (Below 768px) */
-@media (max-width: 767px) {
-
+@media (max-width: 912px) {
+  .car-image3 {
+  max-width: 50%; /* Ensure the image fills the container */
+  height: auto; /* Maintain aspect ratio */
+}
+  .reservation-info {
+    display: none; /* Hide the reservation info on mobile */
+  }
   .multi-step-form {
   display: flex;
   flex-direction: column;
@@ -360,8 +528,8 @@ const formattedDate = computed(() => {
   .progress-indicator {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-    padding: 20px;
+   
+  
     border-radius: 16px; /* More rounded corners */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
 }
@@ -399,14 +567,50 @@ const formattedDate = computed(() => {
 
 
 /* Grid styles for desktop */
-@media (min-width: 768px) {
-
-  .multi-step-form {
-  display: flex;
-  flex-direction: column;
-  margin-left: 25vh;
-  margin-right: 25vh;
+@media (min-width: 911px) {
+  .progress-indicator {
+    background-color: #ffffff;
+    display: inline-flex; /* Change to inline-flex to fit the content width */
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
 }
+  .car-image3 {
+  max-width: 60%; /* Ensure the image fills the container */
+  height: auto; /* Maintain aspect ratio */
+}
+  .car-card {
+    flex-direction: row; /* Horizontal layout for desktop */
+    align-items: center; /* Center items vertically */
+  }
+
+  .car-info {
+    display: flex; /* Use flexbox for car info */
+    width: 100%; /* Ensure full width */
+  }
+
+  .image-container {
+    width: 30%; /* Fixed width for the image */
+    margin-right: 20px; /* Space between image and details */
+  }
+  .image-container2 {
+    width: 30%; /* Fixed width for the image */
+    /* Space between image and details */
+  }
+  .car-details {
+    flex: 1; /* Take up the remaining space */
+  }
+  .multi-step-form {
+    display: grid;
+    grid-template-columns: 1fr 3fr; /* Adjusted grid layout */
+    gap: 20px;
+    margin-left: 10vh;
+    margin-right: 10vh;
+  }
+  
+
   .progress-indicator {
     flex-direction: column;
     width: 100%;
@@ -437,6 +641,7 @@ const formattedDate = computed(() => {
   color: #155724;
 }
 }
+
 
 .reservation-details .font-semibold {
   color: #2c3e50; /* Darker color for the heading */
@@ -482,26 +687,52 @@ const formattedDate = computed(() => {
   flex-direction: column;
   gap: 20px;
   padding: 20px;
+ 
+  background-color: #fff;
   border-radius: 16px; /* More rounded corners */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
 }
 
-/* Styles for car cards */
-.car-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: border 0.3s ease, transform 0.2s;
-    cursor: pointer;
-    margin: 0 10px; /* Add space between carousel items */
-    height: 250px; /* Increased height for the car card */
-}
+
+
+
+.car-list {
+  display: flex;
+  flex-direction: column; /* Vertical list */
+  gap: 10px; /* Space between car cards */
   
+}
+
+.car-card {
+  display: flex;
+  flex-direction: column; /* Default to vertical layout */
+  padding: 20px;
+  border: 0.5px solid #cecaca;
+  border-radius: 8px;
+  transition: transform 0.2s; /* Smooth scale transition */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.car-card:hover {
+  transform: scale(1.01); /* Scale effect on hover */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Center the image in the container */
+}
+.car-image2 {
+  max-width: 100%; /* Ensure the image fills the container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.car-image {
+  max-width: 60%; /* Ensure the image fills the container */
+  height: auto; /* Maintain aspect ratio */
+}
+.user-details p {
+  margin: 4px 0; /* Spacing between user details */
+}
   /* Highlight the selected car with a green border */
   .car-card.selected {
     border-color: green;
@@ -509,17 +740,10 @@ const formattedDate = computed(() => {
     transform: scale(1.00);
   }
   
-  .image-container {
-    height: 180px; /* Increased height for the image container */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-  
+
 /* Ensure the image fills the container without clipping */
 img {
-    max-height: 100%;
+    max-height: 70%;
     width: auto;
 }
 </style>
