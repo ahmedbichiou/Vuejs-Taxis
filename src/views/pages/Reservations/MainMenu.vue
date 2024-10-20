@@ -272,15 +272,19 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
   <Fluid class="flex flex-col gap-8">
     <div class="custom-card relative w-full flex-grow mb-8 ">
       
- 
+      <img
+  src="/demo/images/autoroute.jpg"
+  alt="Background"
+  class="rounded-xl absolute inset-0 object-cover w-full h-[calc(100%+4rem)] -top-6 -bottom-2 opacity-90"
+/>
 
 
 
   
       <div class="relative z-10 flex flex-col lg:flex-row px-4" >
         <div class="flex-1 flex flex-col justify-center mb-4 lg:mb-0 lg:mr-4 mx-4" >
-          <h1 class="text-3xl font-bold mb-2 ">Reserve Your Taxi Right Now</h1>
-          <h2 class="text-xl font-semibold ">We transport all across Tunisia</h2>
+          <h1 class="text-3xl font-bold mb-2 text-white">Reserve Your Taxi Right Now</h1>
+          <h2 class="text-xl font-semibold text-white">We transport all across Tunisia</h2>
         </div>
         
         <div class="relative z-10 card flex flex-col gap-4 p-4 bg-white bg-opacity-90 max-w-md mx-auto rounded-lg shadow-lg mx-4">
