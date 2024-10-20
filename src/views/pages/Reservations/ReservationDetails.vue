@@ -532,7 +532,7 @@ const formattedDate = computed(() => {
     background-color: #ffffff;
     display: inline-flex; /* Change to inline-flex to fit the content width */
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     padding: 20px;
     border-radius: 16px; /* More rounded corners */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
@@ -550,14 +550,7 @@ const formattedDate = computed(() => {
 }
 
 
-  .progress-indicator {
-    display: flex;
-    flex-direction: column;
-   
-  
-    border-radius: 16px; /* More rounded corners */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
-}
+
 .confirm-button {
   width: 100%;
   display: block;
@@ -597,10 +590,11 @@ const formattedDate = computed(() => {
     background-color: #ffffff;
     display: inline-flex; /* Change to inline-flex to fit the content width */
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    
     padding: 20px;
-    border-radius: 16px; /* More rounded corners */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
+   border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect *//* More elevated shadow for a stronger effect */
 }
   .car-image3 {
   max-width: 60%; /* Ensure the image fills the container */
