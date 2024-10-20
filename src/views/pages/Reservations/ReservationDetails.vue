@@ -10,18 +10,36 @@ import { GraphQLClient, gql } from 'graphql-request';
 
 
 // Car options for the carousel
-const cars = ref([
-  { name: 'Normal car', image: 'polo_sedan.png', price: 40, description: 'A reliable and economical car for city travel.', seats: 5 },
-  { name: 'High end car', image: 'Octavia.png', price: 45, description: 'Luxury car with premium features for a comfortable ride.', seats: 5 },
-  { name: '8-seater', image: 'transporter.png', price: 60, description: 'Ideal for larger groups or families.', seats: 8 },
-]);
+
 const progressWidth = computed(() => {
   return `${(currentStep.value - 1) * 33}%`;
 });
 // Route data to access reservation details
 const route = useRoute();
 const reservationData = route.query;
-
+const cars = ref([
+  {
+    name: 'Normal car',
+    image: 'polo_sedan.png',
+    price: reservationData.price4Seater, // Use the price for 4-seater
+    description: 'A reliable and economical car for city travel.',
+    seats: 5,
+  },
+  {
+    name: 'High end car',
+    image: 'Octavia.png',
+    price: (parseFloat(reservationData.price4Seater) || 0) + 5,
+    description: 'Luxury car with premium features for a comfortable ride.',
+    seats: 5,
+  },
+  {
+    name: '8-seater',
+    image: 'transporter.png',
+    price: reservationData.price8Seater, // Use the price for 8-seater
+    description: 'Ideal for larger groups or families.',
+    seats: 8,
+  },
+]);
 // State for current step and selected car
 const currentStep = ref(1);
 const selectedCar = ref(null);
