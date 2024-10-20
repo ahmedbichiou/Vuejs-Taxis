@@ -191,31 +191,33 @@ const formattedDate = computed(() => {
 <template>
   <div class="multi-step-form">
     <div class="progress-indicator">
-      <div
-        class="step"
-        :class="{ active: currentStep === 1, completed: currentStep > 1 }"
-        @click="goToStep(1)"
-      >
-        <span>✔️</span> Step 1: Choose Car and Price
-      </div>
-      <div
-        class="step"
-        :class="{ active: currentStep === 2, completed: currentStep > 2 }"
-        @click="goToStep(2)"
-      >
-        <span>✔️</span> Step 2: Complete Details
-      </div>
-      <div
-        class="step"
-        :class="{ active: currentStep === 3, completed: currentStep > 3 }"
-        @click="goToStep(3)"
-      >
-        <span>✔️</span> Step 3: Confirm Details
-      </div>
-      <div class="progress-bar-container">
-      <div class="progress-bar" :style="{ width: progressWidth }"></div>
-    </div>
-    </div>
+  <div
+    class="step"
+    :class="{ active: currentStep === 1, completed: currentStep > 1 }"
+    @click="goToStep(1)"
+  >
+    🚗 1: Choose Car and Price
+  </div>
+  <div
+    class="step"
+    :class="{ active: currentStep === 2, completed: currentStep > 2 }"
+    @click="goToStep(2)"
+  >
+    📝 2: Complete Details
+  </div>
+  <div
+    class="step"
+    :class="{ active: currentStep === 3, completed: currentStep > 3 }"
+    @click="goToStep(3)"
+  >
+    ✅ 3: Confirm Details
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" :style="{ width: progressWidth }"></div>
+  </div>
+</div>
+
 
     <div class="form-content">
       <!-- Reservation Information Section on the right -->
@@ -307,9 +309,9 @@ const formattedDate = computed(() => {
     <div class="reservation-info2 mb-4">
       <p><strong>Date:</strong> {{ formattedDate }} <strong>Time:</strong> {{ reservationData.hours }}:{{ reservationData.minutes }}</p>
       <div class="flex items-center mb-2">
-        <div class="flex-1"><strong>Adults:</strong> 👤 {{ reservationData.inputNumberAdults }}</div>
+        <div class="flex-1"><strong>Adults :</strong> 👤 {{ reservationData.inputNumberAdults }}</div>
         <div class="flex-1"><strong>Children:</strong> 👶 {{ reservationData.inputNumberChildren }}</div>
-        <div class="flex-1"><strong>Babies:</strong> 👶 {{ reservationData.inputNumberBabies }}</div>
+        <div class="flex-1"><strong>Babies :</strong> 👶 {{ reservationData.inputNumberBabies }}</div>
       </div>
     </div>
 
@@ -434,6 +436,20 @@ const formattedDate = computed(() => {
 
 
 <style scoped>
+@keyframes fadeInFromTop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px); /* Start slightly above */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at normal position */
+  }
+}
+.step-content {
+  opacity: 0; /* Start invisible */
+  animation: fadeInFromTop 0.5s ease forwards; /* Apply animation */
+}
 .detail-cardL{
   width: 50%; /* Equivalent to w-1/2 */
   padding: 1rem; /* Equivalent to p-4 (16px) */
