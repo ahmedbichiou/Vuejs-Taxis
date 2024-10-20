@@ -17,29 +17,49 @@ const progressWidth = computed(() => {
 // Route data to access reservation details
 const route = useRoute();
 const reservationData = route.query;
-const cars = ref([
-  {
-    name: 'Normal car',
-    image: 'polo_sedan.png',
-    price: reservationData.price4Seater, // Use the price for 4-seater
-    description: 'A reliable and economical car for city travel.',
-    seats: 5,
-  },
-  {
-    name: 'High end car',
-    image: 'Octavia.png',
-    price: (parseFloat(reservationData.price4Seater) || 0) + 5,
-    description: 'Luxury car with premium features for a comfortable ride.',
-    seats: 5,
-  },
-  {
-    name: '8-seater',
-    image: 'transporter.png',
-    price: reservationData.price8Seater, // Use the price for 8-seater
-    description: 'Ideal for larger groups or families.',
-    seats: 8,
-  },
-]);
+
+
+const cars = ref([]); // Initialize the cars array
+
+if (reservationData.seats > 4) {
+  // Only show the 8-seater if there are more than 4 seats needed
+  cars.value = [
+    {
+      name: '8-seater',
+      image: 'transporter.png',
+      price: reservationData.price8Seater, // Use the price for 8-seater
+      description: 'Ideal for larger groups or families.',
+      seats: 8,
+    },
+  ];
+} else {
+  // Show both normal and high-end cars for 4 seats or fewer
+  cars.value = [
+    {
+      name: 'Normal car',
+      image: 'polo_sedan.png',
+      price: reservationData.price4Seater, // Use the price for 4-seater
+      description: 'A reliable and economical car for city travel.',
+      seats: 5,
+    },
+    {
+      name: 'High end car',
+      image: 'Octavia.png',
+      price: (parseFloat(reservationData.price4Seater) || 0) + 5,
+      description: 'Luxury car with premium features for a comfortable ride.',
+      seats: 5,
+    },
+    {
+      name: '8-seater',
+      image: 'transporter.png',
+      price: reservationData.price8Seater, // Use the price for 8-seater
+      description: 'Ideal for larger groups or families.',
+      seats: 8,
+    },
+  ];
+}
+
+
 // State for current step and selected car
 const currentStep = ref(1);
 const selectedCar = ref(null);

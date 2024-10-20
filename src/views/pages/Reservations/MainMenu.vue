@@ -3,7 +3,7 @@ import { ref , watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 const calendarValue = ref(null);
-const departure = ref('Tunis Carthage Airport');
+const departure = ref(null);
 const destination = ref(null);
 const loading = ref([false, false]);
 const interacted = ref(false); // Track if the user has interacted with the fields
@@ -67,6 +67,17 @@ const search = (event) => {
 const inputNumberAdults = ref(1);
 const inputNumberChildren = ref(0);
 const inputNumberBabies = ref(0);
+
+watch([inputNumberAdults, inputNumberChildren, inputNumberBabies], ([adults, children, babies]) => {
+    const totalPassengers = adults + children + babies;
+    
+    if (totalPassengers > 8) {
+        alert("The total number of passengers cannot exceed 8.");
+        inputNumberAdults.value = Math.max(0, inputNumberAdults.value - (totalPassengers - 8));
+        inputNumberChildren.value = Math.max(0, inputNumberChildren.value - (totalPassengers - 8));
+        inputNumberBabies.value = Math.max(0, inputNumberBabies.value - (totalPassengers - 8));
+    }
+});
 
 const hours = ref(null);
 const minutes = ref(null);
@@ -245,7 +256,9 @@ const reservationData = {
   hours: hours.value,
   minutes: minutes.value,
   price4Seater: getPrice4Seater(departure.value, destination.value),
-  price8Seater:getPrice8Seater(departure.value, destination.value)
+  price8Seater:getPrice8Seater(departure.value, destination.value),
+  seats: inputNumberAdults.value + inputNumberChildren.value + inputNumberBabies.value
+
 };
 
   loading.value[index] = true;
@@ -356,6 +369,7 @@ const areTimeInvalid = () => interacted.value && (hours.value < 0 || minutes.val
   mode="decimal" 
   placeholder="0"
   :min="1"  
+  :max="8"  
   class="w-24" 
   :class="{ 'border-red-500': arePassengersInvalid() }"  
 />
