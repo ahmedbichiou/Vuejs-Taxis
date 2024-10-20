@@ -3,7 +3,6 @@
 
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
-import Carousel from 'primevue/carousel';
 import Button from 'primevue/button';
 import { GraphQLClient, gql } from 'graphql-request';
 // GraphQL mutation
