@@ -512,6 +512,15 @@ const formattedDate = computed(() => {
 
 /* Mobile Layout (Below 768px) */
 @media (max-width: 912px) {
+  .progress-indicator {
+    background-color: #ffffff;
+    display: inline-flex; /* Change to inline-flex to fit the content width */
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 16px; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More elevated shadow for a stronger effect */
+}
   .car-image3 {
   max-width: 50%; /* Ensure the image fills the container */
   height: auto; /* Maintain aspect ratio */
