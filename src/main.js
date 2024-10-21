@@ -4,8 +4,6 @@ import router from './router';
 
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
-import ConfirmationService from 'primevue/confirmationservice';
-import ToastService from 'primevue/toastservice';
 import { createApolloClient }
 
 
@@ -27,8 +25,7 @@ app.use(PrimeVue, {
     }
   }
 });
-app.use(ToastService);
-app.use(ConfirmationService);
+
 
 
 app.mount('#app');
