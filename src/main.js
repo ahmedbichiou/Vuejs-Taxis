@@ -1,18 +1,12 @@
-import { createApp} from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 
 import Aura from '@primevue/themes/aura';
 import PrimeVue from 'primevue/config';
-import { createApolloClient }
-
 
 import '@/assets/styles.scss';
 import '@/assets/tailwind.css';
-
-
-
-
 
 const app = createApp(App);
 
@@ -25,7 +19,5 @@ app.use(PrimeVue, {
     }
   }
 });
-
-
 
 app.mount('#app');
