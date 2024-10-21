@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-wrapper">
+    
       <app-topbar></app-topbar>
   
       <div class="layout-main-container">
@@ -8,7 +8,7 @@
         </div>
         <app-footer></app-footer>
       </div>
-    </div>
+    
   </template>
   
   <script setup>
